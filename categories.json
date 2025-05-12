@@ -1,0 +1,66 @@
+[
+  {
+    "category": "Leadership",
+    "questions": [6, 16, 27, 43, 65]
+  },
+  {
+    "category": "Administration",
+    "questions": [1, 17, 31, 47, 59]
+  },
+  {
+    "category": "Teaching",
+    "questions": [2, 18, 33, 61, 73]
+  },
+  {
+    "category": "Knowledge",
+    "questions": [9, 24, 39, 68, 79]
+  },
+  {
+    "category": "Wisdom",
+    "questions": [3, 19, 48, 62, 74]
+  },
+  {
+    "category": "Prophecy",
+    "questions": [10, 25, 40, 54, 69]
+  },
+  {
+    "category": "Discernment",
+    "questions": [11, 26, 41, 55, 70]
+  },
+  {
+    "category": "Exhortation",
+    "questions": [20, 34, 49, 63, 75]
+  },
+  {
+    "category": "Shepherding",
+    "questions": [4, 21, 35, 50, 76]
+  },
+  {
+    "category": "Faith",
+    "questions": [12, 28, 42, 56, 80]
+  },
+  {
+    "category": "Evangelism",
+    "questions": [5, 36, 51, 64, 77]
+  },
+  {
+    "category": "Apostleship",
+    "questions": [13, 29, 44, 57, 71]
+  },
+  {
+    "category": "Service/Helps",
+    "questions": [14, 30, 46, 58, 72]
+  },
+  {
+    "category": "Mercy",
+    "questions": [7, 22, 37, 52, 66]
+  },
+  {
+    "category": "Giving",
+    "questions": [8, 23, 38, 53, 67]
+  },
+  {
+    "category": "Hospitality",
+    "questions": [15, 32, 45, 60, 78]
+  }
+]
