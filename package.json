@@ -2,13 +2,18 @@
   "name": "gots-assessment",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://maxofbritton.github.io/hca-gots-assessment/",
   "type": "module",
   "scripts": {
+    "predeploy" : "npm run build",
+    "deploy" : "gh-pages -d dist",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^6.3.5"
+    "gh-pages": "^6.3.0",
+    "vite": "^6.3.5",
+    "vite-plugin-gh-pages": "^1.0.1"
   }
 }
