@@ -20,7 +20,7 @@
     --answer-button-border: #ccc;
     --answer-button-color: #000000;
     --answer-button-hover: #e0e0e0;
-    --nav-button-background: ##11751c;
+    --nav-button-background: #11751c;
     --nav-button-color: rgba(255, 255, 255, 0.8);
     --nav-button-hover: #0f6618;
   }
@@ -55,7 +55,7 @@ body {
 #app {
   background: var(--background-color);
   padding: 20px;
-  border-radius: 0px;
+  border-radius: 4px;
   width: 100%;
   max-width: 600px;
   text-align: center;
@@ -157,4 +157,5 @@ button {
   overflow: hidden;
   height: 4px;
   background-color: var(--progress-bar-color);
+  border-radius: 4px;
 }
