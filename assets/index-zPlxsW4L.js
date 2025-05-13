@@ -19,7 +19,7 @@ var Mo=Object.defineProperty;var ko=(i,t,e)=>t in i?Mo(i,t,{enumerable:!0,config
 `).filter(Boolean)}async function Lh(){const i=await fetch("/hca-gots-assessment/categories.json");$.categories=await i.json()}async function Rh(){await Th(),await Lh(),le()}function le(){if($.currentPage==="directions")vi.innerHTML=`
       <div class="directions">
         <h1>Gifts of the Spirit</h1>
-        <h2 class="romans-header">in Romans 12</h2>
+        <h2 class="accent-text">in Romans 12</h2>
         <h3>DIRECTIONS</h3>
         <p>This is not a test, so there are no wrong answers. The Spiritual Gifts Survey consists of 80 statements. Some
 items reflect concrete actions, other items are descriptive traits, and still others are statements of belief.</p>
@@ -33,14 +33,14 @@ response is best.</li>
           <li>Work at your own pace.</li>
         </ul>
         <p>Your response choices are:</p>
-        <div class="ranking">
+        <div style="text-indent: 20px;">
           <p>5—Highly characteristic of me/definitely true for me</p>
           <p>4—Highly characteristic of me</p>
           <p>3—Frequently characteristic of me/true for me–about 50 percent of the time </p>
           <p>2—Occasionally characteristic of me/true for me–about 25 percent of the time </p>
           <p>1—Not at all characteristic of me/definitely untrue for me</p>
         </div>
-        <button id="start">Start</button>
+        <button class="navigation-button" id="start">Start</button>
       </div>
     `,document.querySelector("#start").addEventListener("click",()=>{$.currentPage="question1",le()});else if($.currentPage.startsWith("question")){const i=parseInt($.currentPage.replace("question",""))-1,t={1:"1 - Not at all",2:"2 - Occasionally",3:"3 - Frequently",4:"4 - Highly",5:"5 - Definitely"};vi.innerHTML=`
       <div class="progress">
@@ -57,14 +57,16 @@ response is best.</li>
               `).join("")}
         </div>
         <div class="navigation">
-          <button id="prev">Back</button>
+          <button class="navigation-button" id="prev">Back</button>
         </div>
       </div>
     `,document.querySelectorAll(".answer-button").forEach(e=>{e.addEventListener("click",s=>{$.answers[i]=parseInt(s.target.dataset.value),i<$.questions.length-1?$.currentPage=`question${i+2}`:$.currentPage="results",le()})}),document.querySelector("#prev").addEventListener("click",()=>{i==0?$.currentPage="directions":$.currentPage=`question${i}`,le()})}else if($.currentPage==="results"){const i=$.categories.map(s=>{const n=s.questions.reduce((o,r)=>o+($.answers[r-1]||0),0);return{category:s.category,score:n}}),t=i.sort((s,n)=>n.score-s.score).slice(0,3).map(s=>s.category).join(", ");vi.innerHTML=`
       <div class="results">
         <h1 style="text-align: left;">GRAPHING YOUR PROFILE</h1>
         <p>The gifts I have begun to discover in my life are: <em><strong>${t}</strong></em></p>
-        <canvas id="resultsChart"></canvas>
-        <button id="restart">Restart</button>
+        <div class="chart-container" style="position: relative; height:50vh;">
+          <canvas id="resultsChart"></canvas>
+        </div>
+        <button class="navigation-button" id="restart">Restart</button>
       </div>
     `;const e=document.getElementById("resultsChart").getContext("2d");new pt(e,{type:"bar",data:{labels:i.map(s=>s.category),datasets:[{label:"Scores",data:i.map(s=>s.score),backgroundColor:"rgb(45, 135, 27, 0.4)",borderColor:"rgb(45, 135, 27)",borderWidth:1}]},options:{responsive:!0,indexAxis:"y",scales:{x:{beginAtZero:!0,ticks:{stepSize:5}},y:{beginAtZero:!0,display:!0,autoSkip:!1,ticks:{display:!0,autoSkip:!1},grid:{display:!1}}},plugins:{legend:{display:!1}}}}),document.querySelector("#restart").addEventListener("click",()=>{$.currentPage="directions",$.answers=[],le()})}}Rh();
