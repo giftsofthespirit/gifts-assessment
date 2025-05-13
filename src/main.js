@@ -11,14 +11,12 @@ const state = {
 };
 
 async function loadQuestions() {
-  // const response = await fetch('/questions.txt');
   const response = await fetch('/hca-gots-assessment/questions.txt');
   const text = await response.text();
   state.questions = text.split('\n').filter(Boolean);
 }
 
 async function loadCategories() {
-  // const response = await fetch('/categories.json');
   const response = await fetch('/hca-gots-assessment/categories.json');
   state.categories = await response.json();
 }
@@ -34,7 +32,7 @@ function render() {
     app.innerHTML = `
       <div class="directions">
         <h1>Gifts of the Spirit</h1>
-        <h2 class="romans-header">in Romans 12</h2>
+        <h2 class="accent-text">in Romans 12</h2>
         <h3>DIRECTIONS</h3>
         <p>This is not a test, so there are no wrong answers. The Spiritual Gifts Survey consists of 80 statements. Some
 items reflect concrete actions, other items are descriptive traits, and still others are statements of belief.</p>
@@ -48,14 +46,14 @@ response is best.</li>
           <li>Work at your own pace.</li>
         </ul>
         <p>Your response choices are:</p>
-        <div class="ranking">
+        <div style="text-indent: 20px;">
           <p>5—Highly characteristic of me/definitely true for me</p>
           <p>4—Highly characteristic of me</p>
           <p>3—Frequently characteristic of me/true for me–about 50 percent of the time </p>
           <p>2—Occasionally characteristic of me/true for me–about 25 percent of the time </p>
           <p>1—Not at all characteristic of me/definitely untrue for me</p>
         </div>
-        <button id="start">Start</button>
+        <button class="navigation-button" id="start">Start</button>
       </div>
     `;
     document.querySelector('#start').addEventListener('click', () => {
@@ -91,7 +89,7 @@ response is best.</li>
             .join('')}
         </div>
         <div class="navigation">
-          <button id="prev">Back</button>
+          <button class="navigation-button" id="prev">Back</button>
         </div>
       </div>
     `;
@@ -132,8 +130,10 @@ response is best.</li>
       <div class="results">
         <h1 style="text-align: left;">GRAPHING YOUR PROFILE</h1>
         <p>The gifts I have begun to discover in my life are: <em><strong>${topCategories}</strong></em></p>
-        <canvas id="resultsChart"></canvas>
-        <button id="restart">Restart</button>
+        <div class="chart-container" style="position: relative; height:50vh;">
+          <canvas id="resultsChart"></canvas>
+        </div>
+        <button class="navigation-button" id="restart">Restart</button>
       </div>
     `;
 
