@@ -3,7 +3,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: dark;
+  color-scheme: light;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
@@ -28,9 +28,9 @@ body {
   padding: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
   height: 100vh;
-  background-color: rgb(25, 57, 10);
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 h1 {
@@ -61,26 +61,13 @@ li {
 }
 
 #app {
-  background: rgb(60, 137, 24);
+  background: rgb(255, 255, 255);
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0);
   width: 100%;
   max-width: 600px;
   text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #f7df1eaa);
 }
 
 .card {
@@ -92,26 +79,21 @@ li {
 }
 
 button {
-  background-color: #007bff;
+  background-color: var(--button-background);
   color: white;
   border: none;
   padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
   margin: 10px 0;
+  transition: background-color 0.3s ease;
 }
 button:hover {
-  background-color: #0056b3;
+  background-color: var(--button-hover);
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-.options {
-  display: flex;
-  justify-content: space-around;
-  margin: 20px 0;
 }
 
 label {
@@ -142,27 +124,84 @@ label {
 
 .bar {
   height: 20px;
-  background-color: #007bff;
+  background-color: #1ea72c;
   color: white;
   text-align: center;
   line-height: 20px;
   border-radius: 4px;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --button-background: #1ea72c;
+    --button-hover: #1fb12d;
+    --progress-bar-color: #007bff;
+    --answer-button-background: #f4f4f4;
+    --answer-button-hover: #e0e0e0;
   }
   a:hover {
-    color: #747bff;
+    color: #27cd37;
   }
   button {
-    background-color: #f9f9f9;
+    background-color: var(--button-background);
   }
 }
 
-input[type='radio'] {
-    accent-color: #232323;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --button-background: #1ea72c;
+    --button-hover: #1fb12d;
+    --progress-bar-color: #007bff;
+    --answer-button-background: #f4f4f4;
+    --answer-button-hover: #e0e0e0;
+  }
 }
 
+.progress-text {
+  text-align: left;
+  font-size: small;
+  font-style: italic;
+}
+.progress-bar {
+  width: 100%;
+  overflow: hidden;
+  height: 4px;
+  background-color: var(--progress-bar-color);
+}
+
+.answer-button {
+  color: black;
+  display: block;
+  text-align: left;
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  background-color: var(--answer-button-background);
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.answer-button:hover {
+  background-color: var(--answer-button-hover);
+}
+
+.fade {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

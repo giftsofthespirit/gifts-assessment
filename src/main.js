@@ -1,4 +1,5 @@
 import './style.css';
+import Chart from 'chart.js/auto';
 
 const app = document.querySelector('#app');
 
@@ -10,13 +11,15 @@ const state = {
 };
 
 async function loadQuestions() {
-  const response = await fetch('/src/questions.txt');
+  // const response = await fetch('/questions.txt');
+  const response = await fetch('/hca-gots-assessment/questions.txt');
   const text = await response.text();
   state.questions = text.split('\n').filter(Boolean);
 }
 
 async function loadCategories() {
-  const response = await fetch('/src/categories.json');
+  // const response = await fetch('/categories.json');
+  const response = await fetch('/hca-gots-assessment/categories.json');
   state.categories = await response.json();
 }
 
@@ -47,7 +50,7 @@ response is best.</li>
         <p>Your response choices are:</p>
         <div class="ranking">
           <p>5—Highly characteristic of me/definitely true for me</p>
-          <p>5—Highly characteristic of me/definitely true for me</p>
+          <p>4—Highly characteristic of me</p>
           <p>3—Frequently characteristic of me/true for me–about 50 percent of the time </p>
           <p>2—Occasionally characteristic of me/true for me–about 25 percent of the time </p>
           <p>1—Not at all characteristic of me/definitely untrue for me</p>
@@ -62,56 +65,54 @@ response is best.</li>
   } else if (state.currentPage.startsWith('question')) {
     const questionIndex = parseInt(state.currentPage.replace('question', '')) - 1;
     const answerLabels = {
-      1: 'Not at all',
-      2: 'Occasionally',
-      3: 'Frequently',
-      4: 'Highly',
-      5: 'Definitely'
-    }
+      1: '1 - Not at all',
+      2: '2 - Occasionally',
+      3: '3 - Frequently',
+      4: '4 - Highly',
+      5: '5 - Definitely'
+    };
+
     app.innerHTML = `
-      <div class="question">
-        <h3>${questionIndex+1}. ${state.questions[questionIndex]}</h2>
-        <div class="options">
-          ${[1, 2, 3, 4, 5]
+      <div class="progress">
+        <p class="progress-text">Question ${questionIndex + 1} of ${state.questions.length}</p>
+        <div class="progress-bar" style="width: ${(questionIndex + 1) / state.questions.length * 100}%;"></div>
+      </div>
+      <div class="question fade">
+        <h3>${state.questions[questionIndex]}</h3>
+        <div>
+          ${[5, 4, 3, 2, 1]
             .map(
               (num) => `
-                <label style="text-align: center;">
+                <button class="answer-button" data-value="${num}">
                   ${answerLabels[num]}
-                  <input style="display: block;" type="radio" name="q${questionIndex}" value="${num}" ${
-                    state.answers[questionIndex] === num ? 'checked' : ''
-                  } />
-                </label>
+                </button>
               `
             )
             .join('')}
         </div>
         <div class="navigation">
-          ${questionIndex > 0 ? '<button id="prev">Previous</button>' : ''}
-          <button id="next">${
-            questionIndex < state.questions.length - 1 ? 'Next' : 'Submit'
-          }</button>
+          <button id="prev">Back</button>
         </div>
       </div>
     `;
 
-    document.querySelectorAll(`input[name="q${questionIndex}"]`).forEach((input) => {
-      input.addEventListener('change', (e) => {
-        state.answers[questionIndex] = parseInt(e.target.value);
+    document.querySelectorAll('.answer-button').forEach((button) => {
+      button.addEventListener('click', (e) => {
+        state.answers[questionIndex] = parseInt(e.target.dataset.value);
+        if (questionIndex < state.questions.length - 1) {
+          state.currentPage = `question${questionIndex + 2}`;
+        } else {
+          state.currentPage = 'results';
+        }
+        render();
       });
     });
 
-    if (questionIndex > 0) {
-      document.querySelector('#prev').addEventListener('click', () => {
-        state.currentPage = `question${questionIndex}`;
-        render();
-      });
-    }
-
-    document.querySelector('#next').addEventListener('click', () => {
-      if (questionIndex < state.questions.length - 1) {
-        state.currentPage = `question${questionIndex + 2}`;
+    document.querySelector('#prev').addEventListener('click', () => {
+      if (questionIndex == 0) {
+        state.currentPage = 'directions';
       } else {
-        state.currentPage = 'results';
+      state.currentPage = `question${questionIndex}`;
       }
       render();
     });
@@ -121,24 +122,64 @@ response is best.</li>
       return { category: category.category, score };
     });
 
+    const topCategories = results
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 3)
+      .map(result => result.category)
+      .join(', ');
+
     app.innerHTML = `
       <div class="results">
         <h1 style="text-align: left;">GRAPHING YOUR PROFILE</h1>
-        <div class="chart">
-          ${results
-            .map(
-              (result) => `
-                <div class="bar-container">
-                  <span class="label">${result.category}</span>
-                  <div class="bar" style="width: ${result.score * 20}px;">${result.score}</div>
-                </div>
-              `
-            )
-            .join('')}
-        </div>
+        <p>The gifts I have begun to discover in my life are: <em><strong>${topCategories}</strong></em></p>
+        <canvas id="resultsChart"></canvas>
         <button id="restart">Restart</button>
       </div>
     `;
+
+    const ctx = document.getElementById('resultsChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: results.map(result => result.category),
+        datasets: [{
+          label: 'Scores',
+          data: results.map(result => result.score),
+          backgroundColor: 'rgb(45, 135, 27, 0.4)',
+          borderColor: 'rgb(45, 135, 27)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        indexAxis: 'y',
+        scales: {
+          x: {
+            beginAtZero: true,
+            ticks: {
+                stepSize: 5
+            }
+          },
+          y: {
+            beginAtZero: true,
+            display: true,
+            autoSkip: false,
+            ticks: {
+              display: true,
+              autoSkip: false
+            },
+            grid: {
+              display: false
+            }
+          },
+        },
+        plugins: {
+            legend: {
+                display: false
+            }
+        }
+      }
+    });
 
     document.querySelector('#restart').addEventListener('click', () => {
       state.currentPage = 'directions';

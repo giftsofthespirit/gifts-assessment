@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vite';
 
-export default defineConfig({
-//   base: '/hca-gots-assessment/',
-})
+export default defineConfig(({ mode }) => ({
+  base: '/hca-gots-assessment/',
+}));
