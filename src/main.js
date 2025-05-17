@@ -53,7 +53,7 @@ response is best.</li>
           <p>2—Occasionally characteristic of me/true for me–about 25 percent of the time </p>
           <p>1—Not at all characteristic of me/definitely untrue for me</p>
         </div>
-        <button class="navigation-button" id="start">Start</button>
+        <button class="nav-button" id="start">Start</button>
       </div>
     `;
     document.querySelector('#start').addEventListener('click', () => {
@@ -71,25 +71,29 @@ response is best.</li>
     };
 
     app.innerHTML = `
-      <div class="progress">
-        <p class="progress-text">Question ${questionIndex + 1} of ${state.questions.length}</p>
-        <div class="progress-bar" style="width: ${(questionIndex + 1) / state.questions.length * 100}%;"></div>
-      </div>
-      <div class="question fade">
-        <h3>${state.questions[questionIndex]}</h3>
-        <div>
-          ${[5, 4, 3, 2, 1]
-            .map(
-              (num) => `
-                <button class="answer-button" data-value="${num}">
-                  ${answerLabels[num]}
-                </button>
-              `
-            )
-            .join('')}
+      <div class="question-page-container">
+        <div class="progress-container">
+          <p class="progress-text">Question ${questionIndex + 1} of ${state.questions.length}</p>
+          <div class="progress-bar" style="width: ${(questionIndex + 1) / state.questions.length * 100}%;"></div>
         </div>
-        <div class="navigation">
-          <button class="navigation-button" id="prev">Back</button>
+        <div class="question-container">
+          <h3>${state.questions[questionIndex]}</h3>
+        </div>
+        <div class="question-button-container">
+          <div class="buttons-container">
+            ${[5, 4, 3, 2, 1]
+              .map(
+                (num) => `
+                  <button class="answer-button" data-value="${num}">
+                    ${answerLabels[num]}
+                  </button>
+                `
+              )
+              .join('')}
+          </div>
+        </div>
+        <div class="navigation-container">
+          <button class="nav-button" id="prev">Back</button>
         </div>
       </div>
     `;
@@ -129,11 +133,14 @@ response is best.</li>
     app.innerHTML = `
       <div class="results">
         <h1 style="text-align: left;">GRAPHING YOUR PROFILE</h1>
-        <p>The gifts I have begun to discover in my life are: <em><strong>${topCategories}</strong></em></p>
-        <div class="chart-container" style="position: relative; height:50vh;">
+        <p>The gifts I have begun to discover in my life are: <span class="em-text">${topCategories}</span></p>
+        <div class="chart-container" style="height: 500px;">
           <canvas id="resultsChart"></canvas>
         </div>
-        <button class="navigation-button" id="restart">Restart</button>
+        <p>Now that you have completed the assessment, thoughtfully answer the following statement:<p>
+        <p>After prayer and worship, I am beginning to sense that God wants me to use my spiritual gifts to serve Christ’s body by:</p>
+        <p>If you are not sure yet how God wants you to use your gifts to serve others, commit to prayer and worship, seeking wisdom and opportunities to use the gifts you have received from God. Ask Him to help you know how He has gifted you for service and how you can begin to use this gift in ministry to others.</p>
+        <button class="nav-button" id="restart">Restart</button>
       </div>
     `;
 
@@ -147,10 +154,13 @@ response is best.</li>
           data: results.map(result => result.score),
           backgroundColor: 'rgb(45, 135, 27, 0.4)',
           borderColor: 'rgb(45, 135, 27)',
-          borderWidth: 1
+          borderWidth: 1,
+          // barThickness: 40,
+          // barPercentage: 0.5,
         }]
       },
       options: {
+        maintainAspectRatio: false,
         responsive: true,
         indexAxis: 'y',
         scales: {
@@ -166,7 +176,7 @@ response is best.</li>
             autoSkip: false,
             ticks: {
               display: true,
-              autoSkip: false
+              autoSkip: false,
             },
             grid: {
               display: false
