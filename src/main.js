@@ -15,13 +15,13 @@ const state = {
 };
 
 async function loadQuestions() {
-  const response = await fetch('/hca-gots-assessment/questions.txt');
+  const response = await fetch('/gifts-assessment/questions.txt');
   const text = await response.text();
   state.questions = text.split('\n').filter(Boolean);
 }
 
 async function loadCategories() {
-  const response = await fetch('/hca-gots-assessment/categories.json');
+  const response = await fetch('/gifts-assessment/categories.json');
   state.categories = await response.json();
 }
 
