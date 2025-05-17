@@ -68,8 +68,8 @@ items reflect concrete actions, other items are descriptive traits, and still ot
         <div class="chart-container" style="height: 500px;">
           <canvas id="resultsChart"></canvas>
         </div>
-        <p>Now that you have completed the assessment, thoughtfully answer the following statement.<p>
-        <p class='em-text">After prayer and worship, I am beginning to sense that God wants me to use my spiritual gifts to serve Christ’s body by ______</p>
+        <p>Now that you have completed the assessment, thoughtfully answer the following statement.</p>
+        <p class="em-text">After prayer and worship, I am beginning to sense that God wants me to use my spiritual gifts to serve Christ’s body by _________.</p>
         <p>If you are not sure yet how God wants you to use your gifts to serve others, commit to prayer and worship, seeking wisdom and opportunities to use the gifts you have received from God. Ask Him to help you know how He has gifted you for service and how you can begin to use this gift in ministry to others.</p>
         <button class="nav-button" id="restart">Restart</button>
       </div>
