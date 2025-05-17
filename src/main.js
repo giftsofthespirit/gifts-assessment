@@ -3,6 +3,10 @@ import Chart from 'chart.js/auto';
 
 const app = document.querySelector('#app');
 
+const appHeight = () => document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`)
+window.addEventListener('resize', appHeight)
+appHeight()
+
 const state = {
   currentPage: 'directions',
   answers: [],
