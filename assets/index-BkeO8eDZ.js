@@ -19,17 +19,14 @@ var ko=Object.defineProperty;var wo=(i,t,e)=>t in i?ko(i,t,{enumerable:!0,config
 `).filter(Boolean)}async function Rh(){const i=await fetch("/gifts-assessment/categories.json");$.categories=await i.json()}async function Eh(){await Lh(),await Rh(),le()}function le(){if($.currentPage==="directions")vi.innerHTML=`
       <div class="directions">
         <h1>Gifts of the Spirit</h1>
-        <h2 class="accent-text">in Romans 12</h2>
         <h3>DIRECTIONS</h3>
         <p>This is not a test, so there are no wrong answers. The Spiritual Gifts Survey consists of 80 statements. Some
 items reflect concrete actions, other items are descriptive traits, and still others are statements of belief.</p>
         <ul>
-          <li>Select the one response you feel best characterizes yourself and place that number in the blank
-provided. Record your answer in the blank beside each item.</li>
-          <li>Do not spend too much time on any one item. Remember, it is not a test. Usually your immediate
-response is best.</li>
+          <li>Select the one response you feel best characterizes yourself.</li>
+          <li>Do not spend too much time on any one item. Remember, it is not a test. Usually your immediate response is best.</li>
           <li>Please give an answer for each item. Do not skip any items.</li>
-          <li>Do not ask others how they are answering or how they think you should answer</li>
+          <li>Do not ask others how they are answering or how they think you should answer.</li>
           <li>Work at your own pace.</li>
         </ul>
         <p>Your response choices are:</p>
